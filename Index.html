@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#E8A7B5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+
+<title>Mi Rutina 🌸</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#FFF9F7;
+  color:#4A4144;
+}
+
+button,input,select,textarea{
+  font:inherit;
+}
+
+.app{
+  max-width:520px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:95px;
+}
+
+header{
+  background:linear-gradient(135deg,#E8A7B5,#DCCFF0);
+  color:white;
+  padding:30px 20px 25px;
+  border-radius:0 0 30px 30px;
+}
+
+header h1{
+  margin:0;
+  font-size:28px;
+}
+
+header p{
+  margin:8px 0 0;
+}
+
+main{
+  padding:18px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+h2{
+  margin-top:0;
+}
+
+.card{
+  background:white;
+  border-radius:22px;
+  padding:18px;
+  margin-bottom:15px;
+  box-shadow:0 4px 18px rgba(0,0,0,.06);
+}
+
+.welcome{
+  text-align:center;
+}
+
+.progress-circle{
+  width:105px;
+  height:105px;
+  border-radius:50%;
+  background:#F8DDE3;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin:15px auto;
+  font-size:25px;
+  font-weight:bold;
+  color:#B86F82;
+}
+
+.task{
+  background:white;
+  border-radius:18px;
+  padding:14px;
+  margin:10px 0;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+
+.task input{
+  width:23px;
+  height:23px;
+  flex-shrink:0;
+}
+
+.task-info{
+  flex:1;
+}
+
+.task-title{
+  font-weight:bold;
+  line-height:1.3;
+}
+
+.task-meta{
+  font-size:12px;
+  color:#9B858D;
+  margin-top:5px;
+}
+
+.task.done{
+  opacity:.5;
+}
+
+.task.done .task-title{
+  text-decoration:line-through;
+}
+
+.delete-btn{
+  border:0;
+  background:#F8DDE3;
+  border-radius:10px;
+  padding:7px 9px;
+}
+
+.day-title{
+  background:#F8DDE3;
+  padding:12px 15px;
+  border-radius:15px;
+  margin:16px 0 8px;
+  font-weight:bold;
+}
+
+.category{
+  width:100%;
+  border:0;
+  background:white;
+  padding:18px;
+  margin:7px 0;
+  border-radius:18px;
+  text-align:left;
+  box-shadow:0 3px 12px rgba(0,0,0,.05);
+  color:#4A4144;
+}
+
+.category small{
+  display:block;
+  color:#9B858D;
+  margin-top:5px;
+}
+
+.stat{
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  margin:12px 0;
+  display:flex;
+  justify-content:space-between;
+  box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+
+.stat strong{
+  color:#B86F82;
+  font-size:20px;
+}
+
+input,select,textarea{
+  width:100%;
+  border:1px solid #EADDE0;
+  background:white;
+  border-radius:15px;
+  padding:14px;
+  margin:7px 0;
+  color:#4A4144;
+}
+
+textarea{
+  min-height:190px;
+  resize:vertical;
+}
+
+.primary{
+  width:100%;
+  border:0;
+  background:#E8A7B5;
+  color:white;
+  padding:15px;
+  border-radius:17px;
+  margin-top:8px;
+  font-weight:bold;
+}
+
+.secondary{
+  border:0;
+  background:#DCCFF0;
+  color:#4A4144;
+  padding:11px 14px;
+  border-radius:14px;
+}
+
+.empty{
+  background:white;
+  border-radius:18px;
+  padding:25px;
+  text-align:center;
+  margin-top:10px;
+}
+
+.english-word{
+  font-size:21px;
+  font-weight:bold;
+}
+
+.pronunciation{
+  color:#B86F82;
+  margin:5px 0;
+}
+
+.example{
+  font-size:14px;
+  color:#777;
+}
+
+nav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:520px;
+  background:white;
+  display:flex;
+  justify-content:space-around;
+  padding:9px 3px calc(9px + env(safe-area-inset-bottom));
+  box-shadow:0 -5px 20px rgba(0,0,0,.08);
+  z-index:100;
+}
+
+nav button{
+  border:0;
+  background:none;
+  color:#6F6267;
+  font-size:20px;
+  padding:3px 7px;
+}
+
+nav button.active{
+  color:#B86F82;
+}
+
+nav span{
+  display:block;
+  font-size:10px;
+  margin-top:3px;
+}
+
+.notice{
+  background:#F8DDE3;
+  border-radius:18px;
+  padding:14px;
+  margin-bottom:15px;
+}
+
+.back{
+  border:0;
+  background:none;
+  padding:0;
+  color:#B86F82;
+  margin-bottom:12px;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+  <h1>Mi Rutina 🌸</h1>
+  <p id="greeting">Hola 💗</p>
+</header>
+
+<main>
+
+<!-- HOY -->
+<section id="today" class="page active">
+
+  <div class="card welcome">
+    <h2>Mi día 🌷</h2>
+    <p id="todayDate"></p>
+
+    <div class="progress-circle">
+      <span id="todayPercent">0%</span>
+    </div>
+
+    <p id="todaySummary">0 de 0 tareas completadas</p>
+  </div>
+
+  <div id="todayTasks"></div>
+
+</section>
+
+
+<!-- SEMANA -->
+<section id="week" class="page">
+
+  <h2>Mi semana 📅</h2>
+
+  <div class="notice">
+    Aquí puedes ver y completar todas las tareas de la semana. 🌸
+  </div>
+
+  <div id="weekTasks"></div>
+
+</section>
+
+
+<!-- CATEGORÍAS -->
+<section id="categories" class="page">
+
+  <h2>Mis áreas 🌸</h2>
+
+  <button class="category" onclick="showCategory('Inglés')">
+    🇬🇧 <b>Inglés</b>
+    <small>Vocabulario, gramática, listening y pronunciación</small>
+  </button>
+
+  <button class="category" onclick="showCategory('Ejercicio')">
+    🏋️ <b>Ejercicio</b>
+    <small>Rutinas y movimiento</small>
+  </button>
+
+  <button class="category" onclick="showCategory('Cuidado')">
+    💆‍♀️ <b>Cuidado personal</b>
+    <small>Cabello, uñas, piel y cuerpo</small>
+  </button>
+
+  <button class="category" onclick="showCategory('Casa')">
+    🧹 <b>Casa</b>
+    <small>Limpieza, habitación y ropa</small>
+  </button>
+
+  <button class="category" onclick="showCategory('Sueño')">
+    😴 <b>Sueño</b>
+    <small>Rutina nocturna</small>
+  </button>
+
+  <button class="category" onclick="showCategory('Para mí')">
+    💗 <b>Tiempo para mí</b>
+    <small>Descanso y bienestar</small>
+  </button>
+
+  <div id="categoryResult"></div>
+
+</section>
+
+
+<!-- INGLÉS -->
+<section id="english" class="page">
+
+  <h2>🇬🇧 Mi Inglés</h2>
+
+  <div class="card">
+
+    <div class="english-word">Hello</div>
+
+    <div class="pronunciation">
+      Pronunciación: jelóu
+    </div>
+
+    <b>Español:</b> Hola
+
+    <p class="example">
+      Example: Hello, how are you?
+    </p>
+
+    <p>
+      Ejemplo: Hola, ¿cómo estás?
+    </p>
+
+  </div>
+
+  <div class="card">
+
+    <div class="english-word">Love</div>
+
+    <div class="pronunciation">
+      Pronunciación: lav
+    </div>
+
+    <b>Español:</b> Amor
+
+    <p class="example">
+      I love you.
+    </p>
+
+    <p>
+      Te amo.
+    </p>
+
+  </div>
+
+  <div class="card">
+
+    <div class="english-word">Beautiful</div>
+
+    <div class="pronunciation">
+      Pronunciación: biútiful
+    </div>
+
+    <b>Español:</b> Hermoso/a
+
+    <p class="example">
+      You are beautiful.
+    </p>
+
+    <p>
+      Eres hermosa.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- PROGRESO -->
+<section id="progress" class="page">
+
+  <h2>Mi progreso 📊</h2>
+
+  <div class="stat">
+    <span>☑️ Tareas completadas</span>
+    <strong id="totalCompleted">0</strong>
+  </div>
+
+  <div class="stat">
+    <span>📝 Total de tareas</span>
+    <strong id="totalTasks">0</strong>
+  </div>
+
+  <div class="stat">
+    <span>🌸 Progreso general</span>
+    <strong id="generalPercent">0%</strong>
+  </div>
+
+  <div class="stat">
+    <span>🔥 Tareas hechas hoy</span>
+    <strong id="todayCompleted">0</strong>
+  </div>
+
+</section>
+
+
+<!-- DIARIO -->
+<section id="journal" class="page">
+
+  <h2>Mi diario 📖</h2>
+
+  <div class="card">
+
+    <p>
+      ¿Cómo me siento hoy? 💗
+    </p>
+
+    <textarea
+      id="journalText"
+      placeholder="Escribe aquí tus pensamientos, sentimientos o lo que quieras recordar...">
+    </textarea>
+
+    <button class="primary" onclick="saveJournal()">
+      Guardar diario 💾
+    </button>
+
+    <p id="journalSaved"></p>
+
+  </div>
+
+</section>
+
+
+<!-- AÑADIR -->
+<section id="add" class="page">
+
+  <h2>Añadir tarea ➕</h2>
+
+  <div class="card">
+
+    <label>¿Qué tienes que hacer?</label>
+
+    <input
+      id="newTask"
+      placeholder="Ejemplo: estudiar inglés">
+
+    <label>Hora</label>
+
+    <input
+      id="newTime"
+      type="time">
+
+    <label>Categoría</label>
+
+    <select id="newCategory">
+
+      <option>Inglés</option>
+      <option>Ejercicio</option>
+      <option>Cuidado</option>
+      <option>Casa</option>
+      <option>Sueño</option>
+      <option>Para mí</option>
+
+    </select>
+
+    <label>Día</label>
+
+    <select id="newDay">
+
+      <option>Lunes</option>
+      <option>Martes</option>
+      <option>Miércoles</option>
+      <option>Jueves</option>
+      <option>Viernes</option>
+      <option>Sábado</option>
+      <option>Domingo</option>
+
+    </select>
+
+    <button class="primary" onclick="addTask()">
+      Añadir tarea 🌸
+    </button>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- MENÚ INFERIOR -->
+
+<nav>
+
+  <button onclick="showPage('today',this)">
+    🏠
+    <span>Hoy</span>
+  </button>
+
+  <button onclick="showPage('week',this)">
+    📅
+    <span>Semana</span>
+  </button>
+
+  <button onclick="showPage('categories',this)">
+    🌸
+    <span>Áreas</span>
+  </button>
+
+  <button onclick="showPage('journal',this)">
+    📖
+    <span>Diario</span>
+  </button>
+
+  <button onclick="showPage('progress',this)">
+    📊
+    <span>Progreso</span>
+  </button>
+
+</nav>
+
+</div>
+
+
+<script>
+
+const days=[
+  "Lunes",
+  "Martes",
+  "Miércoles",
+  "Jueves",
+  "Viernes",
+  "Sábado",
+  "Domingo"
+];
+
+let tasks=
+JSON.parse(localStorage.getItem("miRutinaTasks"))||[];
+
+
+/* TAREAS INICIALES */
+
+if(tasks.length===0){
+
+tasks=[
+
+/* LUNES */
+
+{
+day:"Lunes",
+time:"09:00",
+title:"Estudiar vocabulario de inglés 🇬🇧",
+category:"Inglés",
+done:false
+},
+
+{
+day:"Lunes",
+time:"10:30",
+title:"Ordenar habitación 🧹",
+category:"Casa",
+done:false
+},
+
+{
+day:"Lunes",
+time:"11:30",
+title:"Ejercicio de piernas 🏋️",
+category:"Ejercicio",
+done:false
+},
+
+{
+day:"Lunes",
+time:"17:00",
+title:"Lavar ropa 👕",
+category:"Casa",
+done:false
+},
+
+{
+day:"Lunes",
+time:"19:00",
+title:"Repasar inglés 📚",
+category:"Inglés",
+done:false
+},
+
+{
+day:"Lunes",
+time:"22:00",
+title:"Cuidado facial 💆‍♀️",
+category:"Cuidado",
+done:false
+},
+
+
+/* MARTES */
+
+{
+day:"Martes",
+time:"09:00",
+title:"Estudiar gramática 🇬🇧",
+category:"Inglés",
+done:false
+},
+
+{
+day:"Martes",
+time:"10:30",
+title:"Limpiar baño 🧹",
+category:"Casa",
+done:false
+},
+
+{
+day:"Martes",
+time:"11:30",
+title:"Brazos + abdominales 🏋️",
+category:"Ejercicio",
+done:false
+},
+
+{
+day:"Martes",
+time:"19:00",
+title:"Repasar gramática 📚",
+category:"Inglés",
+done:false
+},
+
+{
+day:"Martes",
+time:"22:00",
+title:"Cuidado personal 🌸",
+category:"Cuidado",
+done:false
+},
+
+
+/* MIÉRCOLES */
+
+{
+day:"Miércoles",
+time:"09:00",
+title:"Listening en inglés 🎧",
+category:"Inglés",
+done:false
+},
+
+{
+day:"Miércoles",
+time:"10:30",
+title:"Orden general de la casa 🧹",
+category:"Casa",
+done:false
+},
+
+{
+day:"Miércoles",
+time:"11:30",
+title:"Ejercicio de piernas 🏋️",
+category:"Ejercicio",
+done:false
+},
+
+{
+day:"Miércoles",
+time:"17:00",
+title:"Lavar ropa 👕",
+category:"Casa",
+done:false
+},
+
+{
+day:"Miércoles",
+time:"19:00",
+title:"Practicar listening 🎧",
+category:"Inglés",
+done:false
+},
+
+{
+day:"Miércoles",
+time:"21:00",
+title:"Arreglar el cabello 💇‍♀️",
+category:"Cuidado",
+done:false
+},
+
+
+/* JUEVES */
+
+{
+day:"Jueves",
+time:"09:00",
+title:"Practicar pronunciación 🇬🇧",
+category:"Inglés",
+done:false
+},
+
+{
+day:"Jueves",
+time:"10:30",
+title:"Ordenar la casa 🧹",
+category:"Casa",
+done:false
+},
+
+{
+day:"Jueves",
+time:"11:30",
+title:"Caminar o cardio 🚶‍♀️",
+category:"Ejercicio",
+done:false
+},
+
+{
+day:"Jueves",
+time:"19:00",
+title:"Repasar pronunciación 🗣️",
+category:"Inglés",
+done:false
+},
+
+{
+day:"Jueves",
+time:"21:00",
+title:"Cuidar manos y uñas 💅",
+category:"Cuidado",
+done:false
+},
+
+
+/* VIERNES */
+
+{
+day:"Viernes",
+time:"09:00",
+title:"Escribir frases en inglés ✍️",
+category:"Inglés",
+done:false
+},
+
+{
+day:"Viernes",
+time:"10:30",
+title:"Limpiar habitación 🧹",
+category:"Casa",
+done:false
+},
+
+{
+day:"Viernes",
+time:"11:30",
+title:"Ejercicio de cuerpo completo 🏋️",
+category:"Ejercicio",
+done:false
+},
+
+{
+day:"Viernes",
+time:"17:00",
+title:"Terminar ropa pendiente 👕",
+category:"Casa",
+done:false
+},
+
+{
+day:"Viernes",
+time:"19:00",
+title:"Repasar frases 📚",
+category:"Inglés",
+done:false
+},
+
+{
+day:"Viernes",
+time:"21:00",
+title:"Pedicura 💅",
+category:"Cuidado",
+done:false
+},
+
+
+/* SÁBADO */
+
+{
+day:"Sábado",
+time:"10:00",
+title:"Repaso ligero de inglés 🇬🇧",
+category:"Inglés",
+done:false
+},
+
+{
+day:"Sábado",
+time:"11:30",
+title:"Ejercicio agradable 💗",
+category:"Ejercicio",
+done:false
+},
+
+{
+day:"Sábado",
+time:"17:00",
+title:"Tiempo para mí 🌸",
+category:"Para mí",
+done:false
+},
+
+{
+day:"Sábado",
+time:"21:00",
+title:"Tratamiento para el cabello 💆‍♀️",
+category:"Cuidado",
+done:false
+},
+
+
+/* DOMINGO */
+
+{
+day:"Domingo",
+time:"09:00",
+title:"Caminar o estirar 🌿",
+category:"Ejercicio",
+done:false
+},
+
+{
+day:"Domingo",
+time:"10:30",
+title:"Ordenar habitación 🧹",
+category:"Casa",
+done:false
+},
+
+{
+day:"Domingo",
+time:"12:00",
+title:"Ducha completa 🚿",
+category:"Cuidado",
+done:false
+},
+
+{
+day:"Domingo",
+time:"17:00",
+title:"Repasar inglés 📚",
+category:"Inglés",
+done:false
+},
+
+{
+day:"Domingo",
+time:"18:00",
+title:"Planificar próxima semana 📅",
+category:"Para mí",
+done:false
+},
+
+{
+day:"Domingo",
+time:"19:00",
+title:"Preparar ropa de la semana 👗",
+category:"Para mí",
+done:false
+},
+
+{
+day:"Domingo",
+time:"20:00",
+title:"Cuidado de piel y cuerpo 💗",
+category:"Cuidado",
+done:false
+},
+
+{
+day:"Domingo",
+time:"22:00",
+title:"Rutina para dormir 😴",
+category:"Sueño",
+done:false
+},
+
+{
+day:"Domingo",
+time:"23:30",
+title:"A la cama 💤",
+category:"Sueño",
+done:false
+}
+
+];
+
+save();
+
+}
+
+
+/* GUARDAR */
+
+function save(){
+
+localStorage.setItem(
+"miRutinaTasks",
+JSON.stringify(tasks)
+);
+
+}
+
+
+/* DÍA ACTUAL */
+
+function getCurrentDay(){
+
+const number=
+new Date().getDay();
+
+if(number===0)
+return "Domingo";
+
+return days[number-1];
+
+}
+
+
+/* MOSTRAR HOY */
+
+function renderToday(){
+
+const today=
+getCurrentDay();
+
+const date=
+new Date().toLocaleDateString(
+"es-ES",
+{
+day:"numeric",
+month:"long",
+year:"numeric"
+}
+);
+
+document.getElementById(
+"todayDate"
+).textContent=
+today+" • "+date;
+
+const list=
+tasks.filter(
+t=>t.day===today
+);
+
+renderTaskList(
+list,
+"todayTasks"
+);
+
+const completed=
+list.filter(
+t=>t.done
+).length;
+
+const total=list.length;
+
+const percent=
+total===0
+?0
+:Math.round(
+completed/total*100
+);
+
+document.getElementById(
+"todayPercent"
+).textContent=
+percent+"%";
+
+document.getElementById(
+"todaySummary"
+).textContent=
+completed+
+" de "+
+total+
+" tareas completadas";
+
+}
+
+
+/* LISTA DE TAREAS */
+
+function renderTaskList(
+list,
+elementId
+){
+
+const container=
+document.getElementById(
+elementId
+);
+
+if(!list.length){
+
+container.innerHTML=
+'<div class="empty">No hay tareas aquí 🌸</div>';
+
+return;
+
+}
+
+container.innerHTML="";
+
+list
+.slice()
+.sort(
+(a,b)=>
+(a.time||"").localeCompare(
+b.time||""
+)
+)
+.forEach(task=>{
+
+const index=
+tasks.indexOf(task);
+
+const div=
+document.createElement(
+"div"
+);
+
+div.className=
+"task"+
+(task.done?" done":"");
+
+div.innerHTML=`
+
+<input
+type="checkbox"
+${task.done?"checked":""}
+onchange="toggleTask(${index})">
+
+<div class="task-info">
+
+<div class="task-title">
+${escapeHTML(task.title)}
+</div>
+
+<div class="task-meta">
+${task.time||"Sin hora"} •
+${escapeHTML(task.category)}
+</div>
+
+</div>
+
+<button
+class="delete-btn"
+onclick="deleteTask(${index})">
+🗑️
+</button>
+
+`;
+
+container.appendChild(div);
+
+});
+
+}
+
+
+/* ESCAPAR TEXTO */
+
+function escapeHTML(text){
+
+return String(text)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* COMPLETAR */
+
+function toggleTask(index){
+
+tasks[index].done=
+!tasks[index].done;
+
+save();
+
+renderAll();
+
+}
+
+
+/* ELIMINAR */
+
+function deleteTask(index){
+
+if(
+confirm(
+"¿Quieres eliminar esta tarea? 🌸"
+)
+){
+
+tasks.splice(index,1);
+
+save();
+
+renderAll();
+
+}
+
+}
+
+
+/* SEMANA */
+
+function renderWeek(){
+
+const container=
+document.getElementById(
+"weekTasks"
+);
+
+container.innerHTML="";
+
+days.forEach(day=>{
+
+const list=
+tasks.filter(
+t=>t.day===day
+);
+
+container.innerHTML+=
+`<div class="day-title">
+${day}
+</div>`;
+
+if(!list.length){
+
+container.innerHTML+=
+`<div class="empty">
+No hay tareas
+</div>`;
+
+return;
+
+}
+
+list
+.slice()
+.sort(
+(a,b)=>
+(a.time||"").localeCompare(
+b.time||""
+)
+)
+.forEach(task=>{
+
+const index=
+tasks.indexOf(task);
+
+container.innerHTML+=`
+
+<div class="task ${task.done?"done":""}">
+
+<input
+type="checkbox"
+${task.done?"checked":""}
+onchange="toggleTask(${index})">
+
+<div class="task-info">
+
+<div class="task-title">
+${escapeHTML(task.title)}
+</div>
+
+<div class="task-meta">
+${task.time||"Sin hora"} •
+${escapeHTML(task.category)}
+</div>
+
+</div>
+
+<button
+class="delete-btn"
+onclick="deleteTask(${index})">
+🗑️
+</button>
+
+</div>
+
+`;
+
+});
+
+});
+
+}
+
+
+/* CATEGORÍA */
+
+function showCategory(category){
+
+const result=
+document.getElementById(
+"categoryResult"
+);
+
+const list=
+tasks.filter(
+t=>t.category===category
+);
+
+result.innerHTML=
+`<h3>${category}</h3>`;
+
+if(!list.length){
+
+result.innerHTML+=
+`<div class="empty">
+No hay tareas en esta categoría 🌸
+</div>`;
+
+return;
+
+}
+
+list.forEach(task=>{
+
+result.innerHTML+=`
+
+<div class="task ${task.done?"done":""}">
+
+<span>
+${task.done?"✅":"⬜"}
+</span>
+
+<div class="task-info">
+
+<div class="task-title">
+${escapeHTML(task.title)}
+</div>
+
+<div class="task-meta">
+${task.day} • ${task.time||"Sin hora"}
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+/* AÑADIR */
+
+function addTask(){
+
+const title=
+document.getElementById(
+"newTask"
+).value.trim();
+
+const time=
+document.getElementById(
+"newTime"
+).value;
+
+const category=
+document.getElementById(
+"newCategory"
+).value;
+
+const day=
+document.getElementById(
+"newDay"
+).value;
+
+if(!title){
+
+alert(
+"Escribe primero la tarea 🌸"
+);
+
+return;
+
+}
+
+tasks.push({
+
+title:title,
+time:time,
+category:category,
+day:day,
+done:false
+
+});
+
+save();
+
+document.getElementById(
+"newTask"
+).value="";
+
+document.getElementById(
+"newTime"
+).value="";
+
+renderAll();
+
+alert(
+"¡Tarea añadida correctamente! 🌸"
+);
+
+showPage("today");
+
+}
+
+
+/* DIARIO */
+
+function saveJournal(){
+
+const text=
+document.getElementById(
+"journalText"
+).value;
+
+localStorage.setItem(
+"miRutinaJournal",
+text
+);
+
+document.getElementById(
+"journalSaved"
+).textContent=
+"Guardado correctamente 💗";
+
+}
+
+
+function loadJournal(){
+
+const saved=
+localStorage.getItem(
+"miRutinaJournal"
+);
+
+if(saved!==null){
+
+document.getElementById(
+"journalText"
+).value=saved;
+
+}
+
+}
+
+
+/* PROGRESO */
+
+function updateProgress(){
+
+const completed=
+tasks.filter(
+t=>t.done
+).length;
+
+const total=
+tasks.length;
+
+const percent=
+total===0
+?0
+:Math.round(
+completed/total*100
+);
+
+const today=
+getCurrentDay();
+
+const todayCompleted=
+tasks.filter(
+t=>t.day===today && t.done
+).length;
+
+document.getElementById(
+"totalCompleted"
+).textContent=
+completed;
+
+document.getElementById(
+"totalTasks"
+).textContent=
+total;
+
+document.getElementById(
+"generalPercent"
+).textContent=
+percent+"%";
+
+document.getElementById(
+"todayCompleted"
+).textContent=
+todayCompleted;
+
+}
+
+
+/* CAMBIAR PANTALLA */
+
+function showPage(
+pageId,
+button
+){
+
+document
+.querySelectorAll(".page")
+.forEach(
+page=>
+page.classList.remove("active")
+);
+
+document
+.getElementById(pageId)
+.classList.add("active");
+
+document
+.querySelectorAll("nav button")
+.forEach(
+btn=>
+btn.classList.remove("active")
+);
+
+if(button)
+button.classList.add("active");
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+
+/* HORA / SALUDO */
+
+function updateGreeting(){
+
+const hour=
+new Date().getHours();
+
+let text;
+
+if(hour<12){
+
+text="Buenos días 🌸";
+
+}else if(hour<19){
+
+text="Buenas tardes 💗";
+
+}else{
+
+text="Buenas noches 🌙";
+
+}
+
+document.getElementById(
+"greeting"
+).textContent=text;
+
+}
+
+
+/* TODO */
+
+function renderAll(){
+
+renderToday();
+
+renderWeek();
+
+updateProgress();
+
+}
+
+updateGreeting();
+
+renderAll();
+
+loadJournal();
+
+</script>
+
+</body>
+</html>
