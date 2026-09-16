@@ -1,0 +1,11 @@
+{
+  "name": "Mi Rutina 🌸",
+  "short_name": "Mi Rutina",
+  "description": "Mi rutina diaria para organizar mis tareas, inglés, ejercicio y cuidado personal.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#FFF9F7",
+  "theme_color": "#E8A7B5",
+  "orientation": "portrait",
+  "icons": []
+}
